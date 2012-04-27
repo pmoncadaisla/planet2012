@@ -43,25 +43,34 @@
 
 <div class="comentarios">
 	
-	<h2>Comentarios:</h2>
-	<% @site.coments.each do |coment| %>
-	  <p>
-		<b><%= coment.user.name if coment.user %>:</b>	 
-		<%= coment.coment %>		
-	  </p>
-	  
-																		
-	  
-	  <p class="list_actions"> 
-		<% if coment.user == current_user %>
-			<%= link_to 'Edit', edit_coment_path(coment) %>
-			<%= link_to 'Destroy', coment, 
-                    :confirm => 'Are you sure?',
-                    :method => :delete %>
+	<h2>Comentarios:</h2>	
+		<% @site.coments.each do |coment| %>
+		
+		<div class="divContainerMain">  
+			<h3>  
+			<%= coment.site.name if coment.site %></h3>  
+			<div>  
+				<a href="#"><%= coment.user.name if coment.user %></a> said <span class="dondeEstoy"><%= get_address(coment.latitude,coment.longitude) if !coment.longitude.nil? %><%= image_tag('blue-marker.png') if !coment.longitude.nil? %> 	</span>
+			</div>  
+			<div class="list_actions"> 
+				<% if coment.user == current_user %>
+					<%= link_to 'Edit', edit_coment_path(coment) %>
+					<%= link_to 'Destroy', coment, 
+							:confirm => 'Are you sure?',
+							:method => :delete %>
+				<% end %>
+			 </div>
+			<div class="calloutUp">  
+				<div class="calloutUp2">  
+				</div>  
+			</div>  
+			<div class="divContainerUp">  
+				<%= coment.coment %>
+			</div>	
+		</div>	 
+		  	
 		<% end %>
-      </p>
-	  
-	<% end %>
+	
 	
 	
 	<%= form_for([@site, @site.coments.build]) do |f| %>
